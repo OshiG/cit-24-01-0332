@@ -1,0 +1,26 @@
+services:
+  web:
+    image: nginx:latest
+    container_name: assignment_web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./website:/usr/share/nginx/html
+    depends_on:
+      - db
+    restart: on-failure
+
+  db:
+    image: mysql:8.0
+    container_name: assignment_db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: assignment_db
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: on-failure
+
+volumes:
+  mysql_data:
